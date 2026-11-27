@@ -2,7 +2,7 @@
 
 End-to-end data analysis of **99,441 real orders** from Olist, a Brazilian online marketplace (2016–2018), using **Excel, SQL (PostgreSQL), Python and Power BI**.
 
-🔗 **Live project page:** [olist-analysis-rabin.netlify.app](olist-analysis-rabin.netlify.app)
+🔗 **Live project page:** [[olist-analysis-rabin.netlify.app](https://olist-analysis-rabin.netlify.app/)](olist-analysis-rabin.netlify.app)
 📄 **Dashboard PDF:** [powerbi/olist_dashboard.pdf](powerbi/olist_dashboard.pdf)
 
 ![Delivery and reviews dashboard](images/dashboard_delivery.png)
