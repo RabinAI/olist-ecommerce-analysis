@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olist E-Commerce Analysis | Data Analyst Portfolio</title>
+<meta name="description" content="End-to-end analysis of 99,441 real e-commerce orders using Excel, SQL (PostgreSQL), Python and Power BI.">
+<style>
+  :root {
+    --ink: #1c2430;
+    --muted: #5b6676;
+    --line: #e3e7ec;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --blue: #1f6fb2;
+    --orange: #e07a3f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  header { background: var(--ink); color: #fff; padding: 64px 0 56px; }
+  header .tag { color: #9fc3e6; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 12px; }
+  header h1 { font-size: clamp(30px, 4.5vw, 44px); line-height: 1.15; margin: 0 0 16px; max-width: 760px; }
+  header p.lead { color: #d3dae3; font-size: 18px; max-width: 700px; margin: 0 0 28px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 15px; }
+  .btn.primary { background: #fff; color: var(--ink); }
+  .btn.ghost { border: 1px solid #6b7889; color: #fff; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .tools span { font-size: 13px; border: 1px solid #47546a; color: #d3dae3; padding: 4px 10px; border-radius: 999px; }
+
+  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  h2 { font-size: 26px; margin: 0 0 8px; }
+  .sub { color: var(--muted); margin: 0 0 28px; max-width: 720px; }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; }
+  .kpi .v { font-size: 30px; font-weight: 700; line-height: 1.1; }
+  .kpi .l { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .kpi.warn .v { color: var(--orange); }
+
+  .findings { display: grid; gap: 16px; }
+  .finding { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 8px; padding: 20px 24px; }
+  .finding.key { border-left-color: var(--orange); }
+  .finding h3 { margin: 0 0 6px; font-size: 18px; }
+  .finding p { margin: 0; color: #344050; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  th { background: #eef2f6; font-weight: 600; }
+  td.num, th.num { text-align: right; }
+  tr.late td { color: #9a4a1c; }
+
+  figure { margin: 0 0 32px; }
+  figure img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .steps li { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px 16px 64px; position: relative; }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 20px; top: 16px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+  .steps b { display: block; }
+
+  ul.recs { padding-left: 20px; margin: 0; }
+  ul.recs li { margin-bottom: 10px; }
+
+  footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="tag">Data Analyst Portfolio Project</p>
+    <h1>Why do e-commerce customers leave bad reviews?</h1>
+    <p class="lead">An end-to-end analysis of 99,441 real orders from Olist, a Brazilian online marketplace (2016–2018), covering sales, customers and delivery performance.</p>
+    <div class="btns">
+      <!-- Replace YOUR-USERNAME with your GitHub username -->
+      <a class="btn primary" href="https://github.com/RabinAI/olist-ecommerce-analysis">View code on GitHub</a>
+      <a class="btn ghost" href="olist_dashboard.pdf">Download dashboard (PDF)</a>
+    </div>
+    <div class="tools">
+      <span>Excel</span><span>PostgreSQL</span><span>Python (pandas, SciPy, seaborn)</span><span>Power BI / DAX</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>At a glance</h2>
+    <p class="sub">Delivered orders only. Revenue is product value excluding freight, in Brazilian reais.</p>
+    <div class="kpis">
+      <div class="kpi"><div class="v">99,441</div><div class="l">orders analysed</div></div>
+      <div class="kpi"><div class="v">R$13.2M</div><div class="l">product revenue</div></div>
+      <div class="kpi"><div class="v">93,358</div><div class="l">unique customers</div></div>
+      <div class="kpi warn"><div class="v">3.0%</div><div class="l">customers who ordered again</div></div>
+      <div class="kpi warn"><div class="v">6.7%</div><div class="l">orders delivered late</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Key findings</h2>
+    <p class="sub">What the data says, and why it matters for the business.</p>
+    <div class="findings">
+      <div class="finding key">
+        <h3>Late deliveries drive a third of all bad reviews</h3>
+        <p>Only 6.7% of orders arrived late, but they produced about 32% of all 1–2 star reviews. Late orders averaged <b>2.27 stars</b> vs <b>4.29</b> for on-time orders, and 62% of them got a bad review. The difference is statistically significant (Mann-Whitney U, p &lt; 0.001).</p>
+      </div>
+      <div class="finding key">
+        <h3>Missing the promised date by even a few days costs a full star</h3>
+        <p>Scores fall steadily with delay: 4.22 on time, 3.29 at 1–3 days late, 2.10 at 4–7 days, and 1.70 at 8+ days late.</p>
+      </div>
+      <div class="finding">
+        <h3>Delivery estimates are overly cautious</h3>
+        <p>64% of orders arrived 10 or more days before the estimated date. Arriving very early scores about the same as arriving just on time (4.32 vs 4.22), so the extra padding earns little. Whether long estimates discourage purchases is a hypothesis worth testing.</p>
+      </div>
+      <div class="finding">
+        <h3>Almost nobody comes back</h3>
+        <p>Only 3.0% of customers placed a second order, and cohort retention stays below 1% in every month after the first purchase.</p>
+      </div>
+      <div class="finding">
+        <h3>Revenue depends on one-time, high-value buyers</h3>
+        <p>RFM segmentation shows two segments of single-purchase, high-spend customers ("Promising" and "At risk") make up 30% of customers but 58% of revenue. Converting them into repeat buyers is the largest growth lever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Review score by delivery delay</h2>
+    <p class="sub">The central result of the project.</p>
+    <table>
+      <thead><tr><th>Delivery timing</th><th class="num">Orders</th><th class="num">Avg review</th></tr></thead>
+      <tbody>
+        <tr><td>10+ days early</td><td class="num">61,523</td><td class="num">4.32</td></tr>
+        <tr><td>0–9 days early</td><td class="num">27,920</td><td class="num">4.22</td></tr>
+        <tr class="late"><td>1–3 days late</td><td class="num">1,852</td><td class="num">3.29</td></tr>
+        <tr class="late"><td>4–7 days late</td><td class="num">1,748</td><td class="num">2.10</td></tr>
+        <tr class="late"><td>8+ days late</td><td class="num">2,781</td><td class="num">1.70</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Power BI dashboard</h2>
+    <p class="sub">Three pages: executive overview, customers, and delivery &amp; reviews. Filterable by year and region.</p>
+    <figure>
+      <img src="images/dashboard_overview.png" alt="Executive overview page: revenue KPIs, monthly revenue trend, revenue by state map and top categories">
+      <figcaption>Executive overview</figcaption>
+    </figure>
+    <figure>
+      <img src="images/dashboard_delivery.png" alt="Delivery and reviews page: review score by delay bucket and average delivery days by state">
+      <figcaption>Delivery &amp; reviews: scores fall as deliveries get later</figcaption>
+    </figure>
+    <figure>
+      <img src="images/dashboard_customers.png" alt="Customers page: RFM segments, revenue share and cohort retention">
+      <figcaption>Customers: RFM segments and cohort retention</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How I did it</h2>
+    <p class="sub">Each tool had a specific job in the workflow.</p>
+    <ol class="steps">
+      <li><b>Excel: explore and check quality</b>Imported the CSVs with Power Query, checked duplicates and blanks for each table, and built first pivot tables (revenue by category and month).</li>
+      <li><b>SQL (PostgreSQL): model, clean and analyse</b>Loaded 9 related tables (1.5M+ rows), added keys, built cleaning views (one review per order, English categories, delivery delay columns) and answered the business questions with CTEs and window functions (LAG, RANK, running totals).</li>
+      <li><b>Python: statistics and segmentation</b>Tested the late-delivery effect (Mann-Whitney U, Welch t-test, Cohen's d), built RFM customer segments and a cohort retention heatmap, and exported a star schema for Power BI.</li>
+      <li><b>Power BI: dashboard</b>Star-schema model with a date table, 17 DAX measures (revenue, AOV, MoM growth, repeat rate, late %), and a three-page interactive report.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Recommendations</h2>
+    <ul class="recs">
+      <li><b>Fix the worst delays first.</b> Orders 8+ days late average 1.7 stars; target the slowest states and sellers.</li>
+      <li><b>Set realistic delivery estimates per region</b> instead of padding them for everyone.</li>
+      <li><b>Notify customers proactively</b> when an order will miss its date, since the score drops as soon as the date is missed.</li>
+      <li><b>Invest in second purchases.</b> A follow-up offer to satisfied, high-value one-time buyers targets 58% of revenue.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <!-- Replace with your name and LinkedIn URL -->
+    <p>Built by <b>Your Name</b> · <a href="https://www.linkedin.com/in/rabin-khadka-7a1963261/">LinkedIn</a> · <a href="https://github.com/RabinAI/olist-ecommerce-analysis">GitHub</a></p>
+    <p>Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce">Brazilian E-Commerce Public Dataset by Olist</a> (Kaggle, CC BY-NC-SA 4.0).</p>
+  </div>
+</footer>
+
+</body>
+</html>
