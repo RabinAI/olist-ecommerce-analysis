@@ -92,4 +92,4 @@ End-to-end data analysis of **99,441 real orders** from Olist, a Brazilian onlin
 6. Open `powerbi/olist_dashboard.pbix` and refresh the data source paths if needed.
 
 ---
-**Author:** Your Name · [LinkedIn](https://www.linkedin.com/in/YOUR-PROFILE)
+**Author:** Rabin Khadka · [LinkedIn](https://www.linkedin.com/in/YOUR-PROFILE)
